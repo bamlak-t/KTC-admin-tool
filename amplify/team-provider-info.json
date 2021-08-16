@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ktcapp-dev-143948-authRole",
+      "UnauthRoleArn": "arn:aws:iam::719254705188:role/amplify-ktcapp-dev-143948-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::719254705188:role/amplify-ktcapp-dev-143948-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-ktcapp-dev-143948-deployment",
+      "UnauthRoleName": "amplify-ktcapp-dev-143948-unauthRole",
+      "StackName": "amplify-ktcapp-dev-143948",
+      "StackId": "arn:aws:cloudformation:eu-west-2:719254705188:stack/amplify-ktcapp-dev-143948/19bd6b00-fd05-11eb-b0af-06fc57f765fa",
+      "AmplifyAppId": "d3lsimxink1h3o"
+    },
+    "categories": {
+      "auth": {
+        "ktcapp125f64a2": {}
+      }
+    }
+  }
+}

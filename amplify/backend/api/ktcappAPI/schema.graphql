@@ -1,0 +1,24 @@
+type TableCellData {
+  cellID: ID!
+  name: String!
+  time: String!
+  data: String!
+}
+
+type Notice @model {
+  id: ID!
+  year_group: Int!
+  notices: [TableCellData]!
+}
+
+type Timetable @model {
+  id: ID!
+  year_group: Int!
+  tables: [TableCellData]!
+}
+
+type Homework @model {
+  id: ID!
+  year_group: Int!
+  homework: [TableCellData]!
+}
