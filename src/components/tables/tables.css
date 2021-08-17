@@ -17,21 +17,22 @@
 
 }
 
-.top-notices td {
-    height: 100%;
+.top-notices th {
+    width: 80%;
+    color: #11592b;
+}
 
+.top-notices td {
+    width: 80%;
+    height: 100%;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center; 
 }
 
-.top-notices th {
-    color: #11592b;
-}
-
-
 .row-buttons-save {
-    width: 60%;
+    width: 100%;
     height: 50%;
     background-color: #ff9900;
     border-radius: 20px;
@@ -48,4 +49,6 @@
 
 .all-notices {
     height: 80px;
+    background-color: #d8ebda;
 }
+
