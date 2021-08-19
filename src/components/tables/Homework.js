@@ -22,9 +22,6 @@ const Homework = () => {
         setHomeworkFormat(allHomework);
     }, []);
     
-
-
-
     return (
         <table className="notice-table">
             <tr  className="top-notices">
@@ -33,7 +30,7 @@ const Homework = () => {
                     <button className="row-buttons-save" onClick={confirmChanges}> Save </button>
                 </td>
             </tr>
-            <tr>
+            <tr className="third-notices">
                 <th style={{width: "20%"}}>
                     Title
                 </th>

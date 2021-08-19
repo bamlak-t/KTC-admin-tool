@@ -1,7 +1,5 @@
 import './components.css';
 
-import { API, graphqlOperation } from 'aws-amplify';
-import { createNotice, updateNotice, createHomework, updateHomework, createTimetable, updateTimetable } from '../graphql/mutations';
 import { useState } from 'react';
 
 import Notice from './tables/Notice'
@@ -18,10 +16,6 @@ const TableNavigation = () => {
     const displayTable = (yearNumber) => {
         console.log(yearNumber, title);
         setYearGroup(yearNumber)
-    }
-
-    const confirmChanges = (yearNumber) => {
-        console.log("changes made");
     }
 
     const years = [1,2,3,4,5,6,7,8,9,10,11]
@@ -59,7 +53,7 @@ const TableNavigation = () => {
 
     const Table = () => {
         if (title === "Notice") {
-            return <Notice />;
+            return <Notice year_group={yearGroup} />;
         } else if (title === "Timetable") {
             return <Timetable />;
         } else if (title === "Homework") {

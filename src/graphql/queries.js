@@ -27,6 +27,12 @@ export const listNotices = /* GraphQL */ `
       items {
         id
         year_group
+        notices {
+          cellID
+          name
+          time
+          data
+        }
         createdAt
         updatedAt
       }
