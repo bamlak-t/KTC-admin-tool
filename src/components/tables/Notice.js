@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import './tables.css';
-
+import TextField from '@material-ui/core/TextField';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listNotices } from '../../graphql/queries';
 import { createNotice, updateNotice } from '../../graphql/mutations';
+import { useEffect, useState } from 'react';
 
 import AddNotice from './AddNotice'
 
@@ -14,69 +14,91 @@ const Notice = (props) => {
     const [dataInput, setData] = useState("");
     const [rowID, setRowID] = useState("");
     const [noticeJSON, setNoticeJSON] = useState([]);
-    // const [noticesFormat, setNoticesFormat] = useState();
+    const [noticeDisplay, setNoticeDisplay] = useState();
+    const [edit, setEdit] = useState(null);
 
+    const GetNotices = async() => {
+        try {
+            const response = (await API.graphql(graphqlOperation(listNotices, {
+                filter: {
+                    year_group: {
+                            eq: props.year_group
+                    }
+                }
+            })));
+            console.log("esponse",response.data)
+            const noticeList = response.data.listNotices.items[0].notices; 
+            setRowID(response.data.listNotices.items[0].id);
+            setNoticeJSON(noticeList);
 
+        } catch(e) {
+            console.log("error fetching data: ",e);
+        }
 
-    const NoticeFormat = () => {
-        // console.log(noticeJSON);
-        const allNotices = noticeJSON.map((message) => <tr  key={message.cellID} className="all-row-data" >
-                                                            <td> {message.name} </td>
-                                                            <td> {message.data} </td>
-                                                            <td> {message.time} </td>
-                                                        </tr>)
-        return (allNotices);
-        // setNoticesFormat(allNotices);
+    }
+
+    const FormatNotice = () => {
+        console.log("JSON", noticeJSON)
+        const allNotices = noticeJSON.map((message) => {
+            if (edit === message.cellID) {
+                <tr onDoubleClick={() => SaveEdit(message.cellID)} key={message.cellID} className="all-row-data" >
+                    <td> 
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Data"
+                            multiline
+                            rows={4}
+                            defaultValue="{message.name}"
+                            variant="outlined"
+                            onChange={props.setData}
+                        /> 
+                    </td>
+                    <td> {message.data}a </td>
+                    <td> {message.time} </td>
+                </tr>
+            } else {
+                <tr onDoubleClick={() => EditRow(message.cellID)} key={message.cellID} className="all-row-data" >
+                    <td> {message.name} </td>
+                    <td> {message.data} </td>
+                    <td> {message.time} </td>
+                </tr> 
+            }
+        })
+        console.log("allnotices", allNotices);
+        setNoticeDisplay(allNotices);
+        // return(allNotices);
+    }
+    
+    const EditRow = (rowID) => {
+        setEdit(rowID);
+    }
+
+    const SaveEdit = (rowID) => {
+        console.log("made changes")
+        setEdit(null);
     }
 
     useEffect(() => {
-        const GetNotices = async() => {
-            try {
-                const response = (await API.graphql(graphqlOperation(listNotices, {
-                    filter: {
-                        year_group: {
-                                eq: props.year_group
-                        }
-                    }
-                })));
-                // console.log(response.data)
-                const noticeList = response.data.listNotices.items[0].notices; 
-                setRowID(response.data.listNotices.items[0].id);
-                setNoticeJSON(noticeList);
-    
-            } catch(e) {
-                console.log("error fetching data: ",e);
-            }
-    
-        }
         GetNotices();
-        // GetNoticeFormat();
+        FormatNotice()
     }, []);
 
     const handleName = event => {
-        // console.log(event.target.value)
-        console.log(nameInput)
         setName(event.target.value);
     };
 
     const handleData = event => {
-        console.log(nameInput)
-
-        // console.log(event.target.value)
         setData(event.target.value);
     };
 
     const handleClickOpen = () => {
         setOpenNotice(true)    
+        console.log(noticeDisplay)
     };
 
     const handleClose = () => {
         setOpenNotice(false)    
     };
-
-    // const indexNotices = () => {
-
-    // }
 
     const handleAdd = () => {
         // console.log(noticeJSON)
@@ -129,8 +151,8 @@ const Notice = (props) => {
                             Date sent
                         </th>
                     </tr>
-        
-                    < NoticeFormat />
+                    {/* < FormatNotice /> */}
+                    {noticeDisplay}
 
                 </table>
             </div>
