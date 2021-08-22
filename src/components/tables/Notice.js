@@ -14,8 +14,11 @@ const Notice = (props) => {
     const [dataInput, setData] = useState("");
     const [rowID, setRowID] = useState("");
     const [noticeJSON, setNoticeJSON] = useState([]);
-    const [noticeDisplay, setNoticeDisplay] = useState();
     const [edit, setEdit] = useState(null);
+    const [updateObj, setUpdateObj] = useState({
+            name: "",
+            data: ""
+    });
 
     const GetNotices = async() => {
         try {
@@ -44,8 +47,19 @@ const Notice = (props) => {
     }
 
     const SaveEdit = (rowID) => {
-        console.log("made changes")
-        setEdit(null);
+        console.log("made changes", updateObj)
+        const indexNotices = [];
+        Object.keys(noticeJSON).map((cell) => {
+                if (cell == rowID) {
+                    indexNotices.push({cellID:cell.toString(), name:updateObj.name, data: updateObj.data, time: noticeJSON[cell].time})
+
+                } else {
+                    indexNotices.push({cellID:cell.toString(), name:noticeJSON[cell].name, data: noticeJSON[cell].data, time: noticeJSON[cell].time})
+                }
+                return <></>
+            }
+        )
+        setNoticeJSON(indexNotices, setEdit(null) );
     }
 
     useEffect(() => {
@@ -62,11 +76,25 @@ const Notice = (props) => {
 
     const handleClickOpen = () => {
         setOpenNotice(true)    
-        console.log(noticeDisplay)
+        // console.log(noticeDisplay)
     };
 
     const handleClose = () => {
         setOpenNotice(false)    
+    };
+
+    const handleUpdate = (text, field) => {
+        console.log(text, " ", field)
+        let tempUpdate = updateObj;
+        if (field == "n") {
+            tempUpdate.name = text;
+
+        } else if (field == "d") {
+
+            tempUpdate.data = text;
+        }
+        setUpdateObj(tempUpdate)
+
     };
 
     const handleAdd = () => {
@@ -128,15 +156,25 @@ const Notice = (props) => {
                                 <td> 
                                     <TextField
                                         id="outlined-multiline-static"
+                                        label="Name"
+                                        multiline
+                                        rows={4}
+                                        defaultValue={message.name}
+                                        variant="outlined"
+                                        onChange={(event) => handleUpdate(event.target.value, "n" )}
+                                    /> 
+                                </td>
+                                <td> 
+                                    <TextField
+                                        id="outlined-multiline-static"
                                         label="Data"
                                         multiline
                                         rows={4}
-                                        defaultValue="{message.name}"
+                                        defaultValue={message.data}
                                         variant="outlined"
-                                        onChange={props.setData}
-                                    /> 
+                                        onChange={(event) => handleUpdate(event.target.value, "d" )}
+                                    />  
                                 </td>
-                                <td> {message.data} </td>
                                 <td> {message.time} </td>
                             </tr>
                         } else {
