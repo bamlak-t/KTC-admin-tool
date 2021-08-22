@@ -29,6 +29,7 @@ const Notice = (props) => {
             console.log("esponse",response.data)
             const noticeList = response.data.listNotices.items[0].notices; 
             setRowID(response.data.listNotices.items[0].id);
+            console.log(noticeList)
             setNoticeJSON(noticeList);
 
         } catch(e) {
@@ -36,40 +37,9 @@ const Notice = (props) => {
         }
 
     }
-
-    const FormatNotice = () => {
-        console.log("JSON", noticeJSON)
-        const allNotices = noticeJSON.map((message) => {
-            if (edit === message.cellID) {
-                <tr onDoubleClick={() => SaveEdit(message.cellID)} key={message.cellID} className="all-row-data" >
-                    <td> 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Data"
-                            multiline
-                            rows={4}
-                            defaultValue="{message.name}"
-                            variant="outlined"
-                            onChange={props.setData}
-                        /> 
-                    </td>
-                    <td> {message.data}a </td>
-                    <td> {message.time} </td>
-                </tr>
-            } else {
-                <tr onDoubleClick={() => EditRow(message.cellID)} key={message.cellID} className="all-row-data" >
-                    <td> {message.name} </td>
-                    <td> {message.data} </td>
-                    <td> {message.time} </td>
-                </tr> 
-            }
-        })
-        console.log("allnotices", allNotices);
-        setNoticeDisplay(allNotices);
-        // return(allNotices);
-    }
-    
+ 
     const EditRow = (rowID) => {
+        console.log("make changes", rowID)
         setEdit(rowID);
     }
 
@@ -80,7 +50,6 @@ const Notice = (props) => {
 
     useEffect(() => {
         GetNotices();
-        FormatNotice()
     }, []);
 
     const handleName = event => {
@@ -152,8 +121,32 @@ const Notice = (props) => {
                         </th>
                     </tr>
                     {/* < FormatNotice /> */}
-                    {noticeDisplay}
-
+                    {/* {noticeDisplay} */}
+                    {noticeJSON.map((message) => {
+                        if (edit === message.cellID) {
+                            return <tr onDoubleClick={() => SaveEdit(message.cellID)} key={message.cellID} className="all-row-data" >
+                                <td> 
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        label="Data"
+                                        multiline
+                                        rows={4}
+                                        defaultValue="{message.name}"
+                                        variant="outlined"
+                                        onChange={props.setData}
+                                    /> 
+                                </td>
+                                <td> {message.data} </td>
+                                <td> {message.time} </td>
+                            </tr>
+                        } else {
+                            return <tr onDoubleClick={() => EditRow(message.cellID)} key={message.cellID} className="all-row-data" >
+                                <td> {message.name} </td>
+                                <td> {message.data} </td>
+                                <td> {message.time}a </td>
+                            </tr> 
+                        }
+                    })}
                 </table>
             </div>
             <AddNotice open={openNotice} handleClose={handleClose} handleAdd={handleAdd} setName={handleName} setData={handleData}/>
