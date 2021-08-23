@@ -55,9 +55,9 @@ const TableNavigation = () => {
         if (title === "Notice") {
             return <Notice year_group={yearGroup} />;
         } else if (title === "Timetable") {
-            return <Timetable />;
+            return <Timetable year_group={yearGroup} />;
         } else if (title === "Homework") {
-            return <Homework />
+            return <Homework year_group={yearGroup} />
         }
     }
 

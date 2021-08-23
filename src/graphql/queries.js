@@ -66,6 +66,12 @@ export const listTimetables = /* GraphQL */ `
       items {
         id
         year_group
+        tables {
+          cellID
+          name
+          time
+          data
+        }
         createdAt
         updatedAt
       }
@@ -99,6 +105,12 @@ export const listHomework = /* GraphQL */ `
       items {
         id
         year_group
+        homework {
+          cellID
+          name
+          time
+          data
+        }
         createdAt
         updatedAt
       }

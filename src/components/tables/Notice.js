@@ -12,7 +12,7 @@ const Notice = (props) => {
 
     const [nameInput, setName] = useState("");
     const [dataInput, setData] = useState("");
-    const [rowID, setRowID] = useState("");
+    const [dbRowID, setDbRowID] = useState("");
     const [noticeJSON, setNoticeJSON] = useState([]);
     const [edit, setEdit] = useState(null);
     const [updateObj, setUpdateObj] = useState({
@@ -29,10 +29,10 @@ const Notice = (props) => {
                     }
                 }
             })));
-            console.log("esponse",response.data)
+            // console.log("response",response.data)
             const noticeList = response.data.listNotices.items[0].notices; 
-            setRowID(response.data.listNotices.items[0].id);
-            console.log(noticeList)
+            setDbRowID(response.data.listNotices.items[0].id);
+            // console.log(noticeList)
             setNoticeJSON(noticeList);
 
         } catch(e) {
@@ -44,22 +44,28 @@ const Notice = (props) => {
     const EditRow = (rowID) => {
         console.log("make changes", rowID)
         setEdit(rowID);
+        const tempUpdate = { name:noticeJSON[rowID].name, data:noticeJSON[rowID].data }
+        setUpdateObj(tempUpdate);
     }
 
     const SaveEdit = (rowID) => {
         console.log("made changes", updateObj)
-        const indexNotices = [];
+        const tempUpdate = [];
         Object.keys(noticeJSON).map((cell) => {
-                if (cell == rowID) {
-                    indexNotices.push({cellID:cell.toString(), name:updateObj.name, data: updateObj.data, time: noticeJSON[cell].time})
+                console.log(cell, rowID)
 
+                if (cell === rowID) {
+                    console.log(updateObj.name)
+                    if (updateObj.name !== "") {   // only add the data if the notice has a name
+                        tempUpdate.push({cellID:cell.toString(), name:updateObj.name, data: updateObj.data, time: noticeJSON[cell].time})
+                    }
                 } else {
-                    indexNotices.push({cellID:cell.toString(), name:noticeJSON[cell].name, data: noticeJSON[cell].data, time: noticeJSON[cell].time})
+                    tempUpdate.push({cellID:cell.toString(), name:noticeJSON[cell].name, data: noticeJSON[cell].data, time: noticeJSON[cell].time})
                 }
                 return <></>
             }
         )
-        setNoticeJSON(indexNotices, setEdit(null) );
+        setNoticeJSON(tempUpdate, setEdit(null) );
     }
 
     useEffect(() => {
@@ -86,10 +92,10 @@ const Notice = (props) => {
     const handleUpdate = (text, field) => {
         console.log(text, " ", field)
         let tempUpdate = updateObj;
-        if (field == "n") {
+        if (field === "n") {
             tempUpdate.name = text;
 
-        } else if (field == "d") {
+        } else if (field === "d") {
 
             tempUpdate.data = text;
         }
@@ -115,10 +121,9 @@ const Notice = (props) => {
 
     const confirmChanges = () => {
         // indexNotices()
-        API.graphql(graphqlOperation(updateNotice, {input: {id:rowID, notices:noticeJSON}}))
+        API.graphql(graphqlOperation(updateNotice, {input: {id:dbRowID, notices:noticeJSON}}))
         .catch((err) => console.log("Error saving changes: ", err))
-        .then(() => console.log("changes saved"))
-        .finally(() => setOpenNotice(false));
+        .finally(() => console.log("changes saved"));
     }
     
 
@@ -157,6 +162,7 @@ const Notice = (props) => {
                                     <TextField
                                         id="outlined-multiline-static"
                                         label="Name"
+                                        fullWidth 
                                         multiline
                                         rows={4}
                                         defaultValue={message.name}
@@ -168,6 +174,7 @@ const Notice = (props) => {
                                     <TextField
                                         id="outlined-multiline-static"
                                         label="Data"
+                                        fullWidth 
                                         multiline
                                         rows={4}
                                         defaultValue={message.data}
@@ -181,7 +188,7 @@ const Notice = (props) => {
                             return <tr onDoubleClick={() => EditRow(message.cellID)} key={message.cellID} className="all-row-data" >
                                 <td> {message.name} </td>
                                 <td> {message.data} </td>
-                                <td> {message.time}a </td>
+                                <td> {message.time} </td>
                             </tr> 
                         }
                     })}
