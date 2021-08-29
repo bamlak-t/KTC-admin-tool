@@ -1,6 +1,6 @@
 {
   "auth": {
-    "ktcapp125f64a2": {
+    "ktcappc85b7a1ac85b7a1a": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authktcapp125f64a2"
+              "userPoolId": "authktcappc85b7a1ac85b7a1a"
             }
           },
           "additionalAuthenticationProviders": []

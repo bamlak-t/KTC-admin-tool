@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "ktcapp125f64a2_identitypool_125f64a2",
+    "identityPoolName": "ktcappc85b7a1a_identitypool_c85b7a1a",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "ktcapp125f64a2",
-    "userPoolName": "ktcapp125f64a2_userpool_125f64a2",
+    "resourceNameTruncated": "ktcappc85b7a1a",
+    "userPoolName": "ktcappc85b7a1a_userpool_c85b7a1a",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,20 +18,20 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+        "email", "custom:year"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "email"
+        "email", "custom:year"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "email", "custom:year"
     ],
-    "userpoolClientLambdaRole": "ktcapp125f64a2_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
-    "sharedId": "125f64a2",
-    "resourceName": "ktcapp125f64a2",
+    "userpoolClientLambdaRole": "ktcappc85b7a1a_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "sharedId": "c85b7a1a",
+    "resourceName": "ktcappc85b7a1ac85b7a1a",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,12 +45,22 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
+    "thirdPartyAuth": false,
     "usernameAttributes": [
         "email"
     ],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "breakCircularDependency": true,
+    "permissions": [],
     "dependsOn": []
 }
