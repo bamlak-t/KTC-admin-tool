@@ -7,10 +7,7 @@
 
 .display-table {
     width: 100%;
-    /* height: 600px; */
     margin: auto;
-    /* height: 200px; */
-    /* overflow-y: scroll; */
 }
 
 .table-header {
@@ -59,8 +56,6 @@
 }
 
 .form-container {
-    /* height: 200px; */
-    /* width: 200px; */
     display: flex;
     flex-direction: row;
     justify-content:space-around;
