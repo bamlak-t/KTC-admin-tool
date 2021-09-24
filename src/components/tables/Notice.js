@@ -29,10 +29,8 @@ const Notice = (props) => {
                     }
                 }
             })));
-            // console.log("response",response.data)
             const noticeList = response.data.listNotices.items[0].notices; 
             setDbRowID(response.data.listNotices.items[0].id);
-            // console.log(noticeList)
             setNoticeJSON(noticeList);
 
         } catch(e) {
@@ -82,7 +80,6 @@ const Notice = (props) => {
 
     const handleClickOpen = () => {
         setOpenNotice(true)    
-        // console.log(noticeDisplay)
     };
 
     const handleClose = () => {
@@ -104,9 +101,7 @@ const Notice = (props) => {
     };
 
     const handleAdd = () => {
-        // console.log(noticeJSON)
         const timeInput = new Date().toLocaleString();
-        // console.log(typeof(timeInput))
         const newNotice = {cellID:"x", name:nameInput, data:dataInput, time:timeInput};
         noticeJSON.unshift(newNotice);
 
@@ -120,7 +115,6 @@ const Notice = (props) => {
     };
 
     const confirmChanges = () => {
-        // indexNotices()
         API.graphql(graphqlOperation(updateNotice, {input: {id:dbRowID, notices:noticeJSON}}))
         .catch((err) => console.log("Error saving changes: ", err))
         .finally(() => console.log("changes saved"));
@@ -153,8 +147,6 @@ const Notice = (props) => {
                             Date sent
                         </th>
                     </tr>
-                    {/* < FormatNotice /> */}
-                    {/* {noticeDisplay} */}
                     {noticeJSON.map((message) => {
                         if (edit === message.cellID) {
                             return <tr onDoubleClick={() => SaveEdit(message.cellID)} key={message.cellID} className="all-row-data" >
