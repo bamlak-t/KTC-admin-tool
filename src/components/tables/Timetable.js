@@ -25,10 +25,8 @@ const Timetable = (props) => {
                     }
                 }
             })));
-            // console.log("response",response.data)
             const timetableList = response.data.listTimetables.items[0].tables; 
             setDbRowID(response.data.listTimetables.items[0].id);
-            // console.log(timetableList)
             setTimetableJSON(timetableList);
 
         } catch(e) {
@@ -48,10 +46,8 @@ const Timetable = (props) => {
         console.log("made changes", updateObj)
         const tempUpdate = [];
         Object.keys(timetableJSON).map((cell) => {
-                // console.log(cell, rowID)
 
                 if (cell === rowID) {
-                    // console.log(updateObj.name)
                     if (updateObj.name !== "") {   // only add the data if the timetable has a name
                         tempUpdate.push({cellID:cell.toString(), name:updateObj.name, data: updateObj.data, time: timetableJSON[cell].time})
                     }
