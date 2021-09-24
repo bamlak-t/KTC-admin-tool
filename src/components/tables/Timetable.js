@@ -71,7 +71,6 @@ const Timetable = (props) => {
             tempUpdate.name = text;
 
         } else if (field === "d") {
-
             tempUpdate.data = text;
         }
         setUpdateObj(tempUpdate)
